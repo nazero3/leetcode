@@ -1,3 +1,4 @@
 ﻿  codility.cpp
-C:\Users\nezir.aydin\source\repos\codility\codility\codility.cpp(555,36): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nezir.aydin\source\repos\codility\codility\codility.cpp(650,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nezir.aydin\source\repos\codility\codility\codility.cpp(651,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   codility.vcxproj -> C:\Users\nezir.aydin\source\repos\codility\x64\Debug\codility.exe

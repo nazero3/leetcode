@@ -9,6 +9,7 @@
 #include <string>
 #include <list>
 #include <set>
+#include <queue>
 using namespace std;
 
 struct ListNode {
@@ -18,6 +19,7 @@ struct ListNode {
 	ListNode(int x) : val(x), next(nullptr) {}
 	ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
+
 
 //int solution(vector<int>& A) {
 //	vector<bool> res;
@@ -210,6 +212,7 @@ struct ListNode {
 //    return intersections;
 //}
 
+
 //int soultion(string s) {
 //	int total = 0;
 //	for (int i = 0; i < s.size();i++) {
@@ -301,6 +304,7 @@ struct ListNode {
 //    return maxLen;
 //}
 
+
 //bool solution(int x) {
 //	string s ;
 //	bool result = true;
@@ -317,6 +321,7 @@ struct ListNode {
 //}
 
 // needs to be repeated again *******LINKED LIST*******
+
 
 //ListNode* solution(ListNode* l1, ListNode* l2) {
 //
@@ -375,6 +380,7 @@ struct ListNode {
 //
 //	
 //}
+
 
 //int solution(vector<int>& nums) {
 //	vector<int> res;
@@ -478,14 +484,8 @@ struct ListNode {
 //
 //	return s.substr(i,j-i+1);
 //}
- struct TreeNode {
-     int val;
-     TreeNode *left;
-     TreeNode *right;
-     TreeNode() : val(0), left(nullptr), right(nullptr) {}
-     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-  };
+
+
  //vector<int> sol{};
  //vector<int> preorderTraversal(TreeNode* root) {
  //    if (!root)
@@ -498,30 +498,27 @@ struct ListNode {
 	// }
  //}
 
- //vector<vector<int>> levels;
 
+ //vector<vector<int>> levels;
  //void helper(TreeNode* node, int level) {
  //    // start the current level
  //    if (levels.size() == level)
  //        levels.push_back(vector<int>());
-
  //    // fulfill the current level
  //    levels[level].push_back(node->val);
-
  //    // process child nodes for the next level
  //    if (node->left != nullptr)
  //        helper(node->left, level + 1);
  //    if (node->right != nullptr)
  //        helper(node->right, level + 1);
  //}
-
  //vector<vector<int>> levelOrder(TreeNode* root) {
  //    if (root == nullptr)
  //        return levels;
-
  //    helper(root, 0);
  //    return levels;
  //}
+
 
  //bool hasPathSum(TreeNode* root, int sum) {
 	// if (root == nullptr)
@@ -531,6 +528,7 @@ struct ListNode {
 	//	 return (sum == 0);
 	// return hasPathSum(root->left, sum) || hasPathSum(root->right, sum);
  //}
+
 
 // int pivitIndex(vector<int> nums) {
 //	 int sum = 0;
@@ -545,6 +543,8 @@ struct ListNode {
 //	 }
 //	 return -1;
 //}
+
+
  /********
  find method in c++ how to use 
  you can use it to find prefix or occurrence of a substring with the string
@@ -563,18 +563,133 @@ struct ListNode {
 	// }
 	// return prefix;
  //}
- void revesrse(vector<char>& s) {
+ //int minSubArrayLen(int s, vector<int>& nums)
+ //{
+	// int n = nums.size();
+	// int ans = INT_MAX;
+	// for (int i = 0; i < n; i++) {
+	//	 for (int j = i; j < n; j++) {
+	//		 int sum = 0;
+	//		 for (int k = i; k <= j; k++) {
+	//			 sum += nums[k];
+	//		 }
+	//		 if (sum >= s) {
+	//			 ans = min(ans, (j - i + 1));
+	//			 break; //Found the smallest subarray with sum>=s starting with index i, hence move to next index
+	//		 }
+	//	 }
+	// }
+	// return (ans != INT_MAX) ? ans : 0;
+ //}
 
- }
+//class MovingAverage {
+//public:
+//	int size;
+//	queue<int> a;
+//	MovingAverage(int size){
+//		//int a[3]{};
+//		this->size = size;
+//		
+//	}
+//
+//	double next(int val) {
+//		double x=0;// all values will be added to it
+//		
+//		if (a.size() < this->size)
+//		{
+//			a.push(val);
+//		}
+//		else
+//		{
+//			a.pop();
+//			a.push(val);
+//		}
+//		queue<int> tmp = a;
+//		for (int i = 0; i < a.size(); i++)
+//		{
+//			
+//			x += tmp.front();
+//			tmp.pop();
+//		}
+//		
+//		return x / a.size();
+//		
+//	}
+//};
+
+
+#include <vector>
+#include <queue>
+
+class Solution {
+public:
+	void wallsAndGates(std::vector<std::vector<int>>& rooms) {
+		if (rooms.empty() || rooms[0].empty()) {
+			return;
+		}
+
+		const int INF = 2147483647;
+		const std::vector<std::vector<int>> DIRECTIONS = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+
+		int m = rooms.size();
+		int n = rooms[0].size();
+
+		std::queue<std::pair<int, int>> q;
+
+		// Enqueue all gates to start BFS from each gate
+		for (int i = 0; i < m; ++i) {
+			for (int j = 0; j < n; ++j) {
+				if (rooms[i][j] == 0) {
+					q.push({ i, j });
+				}
+			}
+		}
+
+		while (!q.empty()) {
+			auto point = q.front();
+			q.pop();
+			int row = point.first;
+			int col = point.second;
+
+			for (const auto& direction : DIRECTIONS) {
+				int r = row + direction[0];
+				int c = col + direction[1];
+
+				if (r < 0 || c < 0 || r >= m || c >= n || rooms[r][c] != INF) {
+					continue;
+				}
+
+				rooms[r][c] = rooms[row][col] + 1;
+				q.push({ r, c });
+			}
+		}
+	}
+};
+
+
+
+struct TreeNode {
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode() : val(0), left(nullptr), right(nullptr) {}
+	TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+	TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
+
+};
 
 int main()
 {
-    std::cout << "Hello World!\n";
-	vector<int> n = { 1,7,3,6,5,6 };
-	vector<string> str = { "flower", "flow", "flight" };
-	//longestCommonPrefix(str);
-	//pivitIndex(n);
-
+	std::cout << "Hello World!\n";
+	//MovingAverage *movingAverage = new MovingAverage(3);
+	//cout << movingAverage->next(1) << endl; // return 1.0 = 1 / 1
+	//cout<<movingAverage->next(10)<<endl ; // return 5.5 = (1 + 10) / 2
+	//cout << movingAverage->next(3) << endl; // return 4.66667 = (1 + 10 + 3) / 3
+	//cout << movingAverage->next(5) << endl; // return 6.0 = (10 + 3 + 5) / 3
+	Solution sol{};
+	vector<std::vector<int>> rooms= { {2147483647, -1, 0, 2147483647},{2147483647, 2147483647, 2147483647, -1},{2147483647, -1, 2147483647, -1},{0, -1, 2147483647, 2147483647} };
+	sol.wallsAndGates(rooms);
+	cout << " ";
 
 
 	return 0;
